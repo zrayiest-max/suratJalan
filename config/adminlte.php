@@ -16,8 +16,7 @@ return [
     | page title set with @section('title', ...).
     |
     */
-
-    'title' => 'Stock Management',
+    'title' => 'Surat Jalan',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -54,7 +53,7 @@ return [
     |
     */
 
-    'logo' => '<b>Stock</b>Management',
+    'logo' => '<b>Surat</b>Jalan',
     // 'logo_img' => 'vendor/adminlte/img/AdminLTELogo.png',
     // 'logo_img_class' => 'brand-image opacity-75 shadow',
     // 'logo_img_alt' => 'Stock Management',
@@ -235,21 +234,38 @@ return [
         // ---- Sidebar: mirrors the AdminLTE 4 demo sidebar ----
         [
             'text' => 'Dashboard',
-            'icon' => '',
+            'icon' => 'bi bi-speedometer2',
             'route' => 'dashboard',
         ],
         [
-            'text' => 'Products',
-            'icon' => '',
-            'submenu' => [
-                ['text' => 'All Products', 'icon' => ''],
-                ['text' => 'Procurement', 'icon' => ''],
-            ],
+            'text' => 'Folder',
+            'icon' => 'bi bi-folder-plus',
+            'route' => 'folder.index',
         ],
         [
-            'text' => 'Customers',
-            'icon' => '',
+            'text' => 'Data Master',
+            'icon' => 'bi bi-database',
+            'submenu' => [
+                [
+                    'text' => 'Data Merk',
+                    'icon' => 'bi bi-folder-plus',
+                    'route' => 'merk.index',
+                ],
+                [
+                    'text' => 'Data Penerima',
+                    'icon' => 'bi bi-person-plus',
+                    'route' => 'penerima.index',
+                ],
+            ],
         ],
+        // [
+        //     'text' => 'Data Surat Jalan',
+        //     'icon' => '',
+        // ],
+        // [
+        //     'text' => 'Tracking Item',
+        //     'icon' => '',
+        // ],
     ],
 
     /*
