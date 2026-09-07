@@ -52,7 +52,7 @@ class FolderController extends Controller
             'items.*.id' => ['nullable', 'exists:folder_details,id'],
             'items.*.jumlah' => ['required', 'integer', 'min:1'],
             'items.*.nama_barang' => ['required', 'string'],
-            'items.*.surat_jalan_id' => ['nullable','exists:surat_jalans,id'],
+            'items.*.surat_jalan_id' => ['nullable', 'exists:surat_jalans,id'],
 
             'deleted_ids' => ['nullable', 'array'],
             'deleted_ids.*' => ['exists:folder_details,id'],

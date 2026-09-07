@@ -4,7 +4,9 @@ use App\Http\Controllers\FolderController;
 use App\Http\Controllers\MerkController;
 use App\Http\Controllers\PenarimaController;
 use App\Http\Controllers\suratJalanController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -13,6 +15,55 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/backup-database', function () {
+    $databasePath = config('database.connections.sqlite.database');
+
+    if (! file_exists($databasePath)) {
+        abort(404, 'Database tidak ditemukan.');
+    }
+
+    return response()->download(
+        $databasePath,
+        'surat-jalan-backup-'.now()->format('Y-m-d_H-i-s').'.sqlite'
+    );
+})->name('database.backup');
+
+Route::post('/reset-database', function () {
+    Artisan::call('migrate:fresh', [
+        '--seed' => true,
+        '--force' => true,
+    ]);
+
+    return redirect()
+        ->route('database')
+        ->with('success', 'Database berhasil direset ke kondisi awal.');
+})->name('database.reset');
+
+Route::post('/restore-database', function (Request $request) {
+    $request->validate([
+        'database' => ['required', 'file'],
+    ]);
+
+    $databasePath = config('database.connections.sqlite.database');
+
+    if (! $databasePath) {
+        return back()->with('error', 'Lokasi database tidak ditemukan.');
+    }
+
+    $uploadedFile = $request->file('database');
+
+    copy(
+        $uploadedFile->getRealPath(),
+        $databasePath
+    );
+
+    return back()->with('success', 'Database berhasil direstore.');
+})->name('database.restore');
+
+Route::get('/database', function () {
+    return view('settings.database');
+})->name('database');
 
 Route::get('/merk', [MerkController::class, 'index'])->name('merk.index');
 Route::post('/merk', [MerkController::class, 'store'])->name('merk.store');

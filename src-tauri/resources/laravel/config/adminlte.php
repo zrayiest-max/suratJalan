@@ -256,6 +256,11 @@ return [
                     'icon' => 'bi bi-person-plus',
                     'route' => 'penerima.index',
                 ],
+                [
+                    'text' => 'Backup Database',
+                    'icon' => 'bi bi-database-down',
+                    'route' => 'database',
+                ],
             ],
         ],
         // [

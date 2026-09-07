@@ -8,6 +8,17 @@
 </head>
 
 <body>
+    <div class="action-bar no-print">
+        <a href="{{ route('folder.index') }}" class="action-btn btn-back">
+            <span>←</span>
+            Kembali
+        </a>
+
+        <button onclick="window.print()" class="action-btn btn-print">
+            <span>🖨</span>
+            Cetak
+        </button>
+    </div>
     @foreach ($folder->suratJalans as $suratJalan)
         <div class="page">
             <div class="header">
